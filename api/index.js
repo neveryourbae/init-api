@@ -15,13 +15,13 @@ app.get('/api/', async (req, res) => {
         const response = await axios.get('https://www.gate.io/apiw/v2/pre_market/currencies/INIT');
 
         // Extract relevant data
-        const tomaData = response.data.data;
+        const initData = response.data.data;
         const latestDealPrice = parseFloat(tomaData.latest_deal_price);
 
         // Send data as a response
         res.json({
-            currency: tomaData.currency,
-            full_name: tomaData.full_name,
+            currency: initData.currency,
+            full_name: initData.full_name,
             latest_deal_price: latestDealPrice
         });
     } catch (error) {
