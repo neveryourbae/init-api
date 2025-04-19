@@ -5,24 +5,19 @@ const axios = require('axios');
 const app = express();
 const PORT = 3000;
 
-// Enable CORS
 app.use(cors());
 
-// Endpoint to fetch INIT price from Gate.io
 app.get('/api/', async (req, res) => {
     try {
-        // Fetch data from Gate.io API
         const response = await axios.get('https://www.gate.io/apiw/v2/pre_market/currencies/INIT');
 
-        // Extract relevant data
         const initData = response.data.data;
-        const latestDealPrice = parseFloat(tomaData.latest_deal_price);
+        const latestDealPrice = parseFloat(initData.latest_deal_price);
 
-        // Send data as a response
         res.json({
-            currency: initData.currency,
-            full_name: initData.full_name,
-            latest_deal_price: latestDealPrice
+            result: {
+                lastPrice: latestDealPrice
+            }
         });
     } catch (error) {
         console.error('Error fetching data from Gate.io:', error);
@@ -30,7 +25,6 @@ app.get('/api/', async (req, res) => {
     }
 });
 
-// Start server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
